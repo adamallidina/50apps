@@ -1,4 +1,11 @@
+# Purpose of challenge:
+# Essentially build a Python web crawler.
+#
+# Unfortunately I didn't have time to do the complex version :(
+
 import sys, httplib, re
+
+from BeautifulSoup import BeautifulSoup, HTMLParseError
 
 # don't do anything unless we provide all the proper arguments
 if len(sys.argv) < 4:
@@ -20,7 +27,7 @@ pages      = [url]
 # what pages have matched our search text?
 results    = []
 
-for i in range(1, depth):
+for i in range(0, depth):
   # collect the pages we should look at in the next iteration
   next_pages = []
   for url in pages:
@@ -39,30 +46,38 @@ for i in range(1, depth):
       try:
         # request the page
         http = httplib.HTTPConnection(url)
-        http.request("GET", page)
-
+        http.request("GET", page) 
         resp = http.getresponse()
         data = resp.read()
 
+        # check to see if this page has our search text
+        if data.lower().find(search_text.lower()) >= 0:
+          results.append(url + "/" + page)
+
+        soup = BeautifulSoup(data)
+
         # extract links
-        matches = re.findall('<a [^>]*?href="(.*?)".*?>', data)
+        for link in soup.findAll("a"):
+          href = [x[1] for x in link.attrs if x[0] == "href"]
 
-        for link in matches:
-          if link[0:4] != "http":
-            link = "http://" + url + "/" + link
+          # sometimes the href is not present
+          if href != None and len(href) > 0:
+            href = href[0]
 
-          # don't look at it if we've already seen it
-          if link not in done:
-            print "Found link: %s" % link
-            next_pages.append(link)
-            done.append(link)
+            if href[0:4] != "http":
+              href = "http://" + url + "/" + href
 
-          # check to see if this page has our search text
-          if data.lower().find(search_text.lower()) >= 0:
-            results.append(url)
+            # don't look at it if we've already seen it
+            if href not in done:
+              print "Found link: %s" % href
+              next_pages.append(href)
+              done.append(href)
       except httplib.BadStatusLine:
         # no worries, just ignore it
-        print "bad status on %s/%s" % (url, page)
+        print "bad status on %s, %s" % (url, page)
+      except HTMLParseError:
+        # same deal
+        pass
     else:
       print "Invalid URL: %s" % url
 
