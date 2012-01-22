@@ -62,7 +62,7 @@ for i in range(1, depth):
             results.append(url)
       except httplib.BadStatusLine:
         # no worries, just ignore it
-        print "bad status on %s/%s", (url, page)
+        print "bad status on %s/%s" % (url, page)
     else:
       print "Invalid URL: %s" % url
 
