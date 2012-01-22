@@ -45,10 +45,12 @@ for i in range(0, depth):
 
       try:
         # request the page
-        http = httplib.HTTPConnection(url)
+        http = httplib.HTTPConnection(url, timeout=10)
         http.request("GET", page) 
         resp = http.getresponse()
         data = resp.read()
+
+        print "Got it, parsing time"
 
         # check to see if this page has our search text
         if data.lower().find(search_text.lower()) >= 0:
@@ -77,6 +79,10 @@ for i in range(0, depth):
         print "bad status on %s, %s" % (url, page)
       except HTMLParseError:
         # same deal
+        pass
+      except httplib.socket.timeout:
+        pass
+      except httplib.socket.gaierror:
         pass
     else:
       print "Invalid URL: %s" % url
