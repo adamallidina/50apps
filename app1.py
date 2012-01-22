@@ -119,6 +119,9 @@ for level in range(1, depth + 1):
 
   pages = next_pages
 
+# sort by number of matches
+results = sorted(results, key=itemgetter(2), reverse=True)
+
 for result in results:
   if result in blacklist:
     print "Blacklisted: (%s, level %d, matches %d)" % result
