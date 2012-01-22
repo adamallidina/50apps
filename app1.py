@@ -6,6 +6,7 @@
 import sys, httplib, re, getopt
 
 from BeautifulSoup import BeautifulSoup, HTMLParseError
+from operator import itemgetter
 
 # don't do anything unless we provide all the proper arguments
 if len(sys.argv) < 4:
