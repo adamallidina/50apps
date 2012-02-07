@@ -1,0 +1,78 @@
+body {
+  margin: 0px;
+}
+
+.settings-bar {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #FFFFCC;
+}
+
+.settings-bar a {
+  cursor: pointer;
+  color: blue;
+  padding: 5px;
+  margin: 10px 5px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid black;
+  box-shadow: 2px 2px black;
+  opacity: 0.9;
+  display: block;
+  float: left;
+}
+
+.settings-bar a:hover {
+  opacity: 1.0;
+}
+
+.settings-bar a:active {
+  box-shadow: 0px 0px;
+  margin-top: 12px;
+  margin-left: 7px;
+  margin-right: 3px;
+  margin-bottom: 8px;
+}
+
+.settings-bar .colour-btn {
+  width: 30px;
+}
+
+.settings-bar .blue   { background-color: blue; }
+.settings-bar .red    { background-color: red; }
+.settings-bar .green  { background-color: green; }
+.settings-bar .yellow { background-color: yellow; }
+
+.clear { clear: both; }
+
+.post-it {
+  margin: 10px;
+  float: left;
+  position: relative;
+  width: 175px;
+  height: 175px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 64);
+  border-radius: 3px;
+  padding: 5px;
+  display: none;
+  background-color: #FFFFCC;
+  background-image: linear-gradient(top, #F1E767 0%, #FEB645 100%);
+}
+
+.selected {
+  box-shadow: 3px 3px rgba(128, 128, 128, 64);
+}
+
+.blue-box { background: linear-gradient(top, #FFFFFF 0%, #0000FF 100%); }
+
+.post-it .delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-family: sans-serif;
+  color: red;
+  font-weight: bold;
+}
