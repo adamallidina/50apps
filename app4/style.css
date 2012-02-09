@@ -70,7 +70,8 @@ body {
   padding: 5px;
   display: none;
   background-color: #FFFFCC;
-  background-image: linear-gradient(top, #F1E767 0%, #FEB645 100%);
+  background-image: -moz-linear-gradient(center top, #F1E767 0%, #FEB645 100%);
+  background-image: -webkit-linear-gradient(center top, #F1E767 0%, #FEC6C0 100%);
 }
 
 .post-it .timestamp {

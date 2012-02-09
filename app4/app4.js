@@ -32,6 +32,7 @@ escapeHTML = function(s) {
 };
 
 function saveAll(){
+  // All the postits are stored as JSON in local storage
   localStorage["postits"] = JSON.stringify(
     $(".post-it").map(function(){
       // is this the one we're typing in?
@@ -43,6 +44,8 @@ function saveAll(){
         // yes
         text = escapeHTML($(".text textarea", this).val());
       }
+
+      // save this postit as a basic Javascript object
       return {
         offset: $(this).offset(),
         text: text,
@@ -59,26 +62,27 @@ function deselect(){
     .children(".text")
       .each(function(){
         // when you deselect something, remove the textarea
-        // and put the contents in as HTML
-        $(this).html(escapeHTML($("textarea", this).val()));
+        // if it is there and put the contents in as HTML
+        if ($("textarea", this).length > 0){
+          $(this).html(escapeHTML($("textarea", this).val()));
+        }
       });
 }
 
 function createPostit(){
-  // create the div
   var time = new Date();
   var div = $("<div>")
     .addClass("post-it")
+    // each post-it has a div called text which holds the contents of this postit
     .append($("<div>").addClass("text"))
+    // another div for holding the time stamp
     .append($("<div>").addClass("timestamp")
         .html($.datepicker.formatDate("yy-mm-dd", time) + " " + (time.getHours() + ":" + time.getMinutes())))
     .click(function(){
-      // when clicked, de-select other ones and select this one
       deselect();
       $(this).addClass("selected");
     })
     .draggable({
-      // when we stop dragging, save position
       stop: saveAll
     })
     .appendTo("body")
@@ -100,8 +104,12 @@ function createPostit(){
 $(function(){
   $(window).keypress(function(ev){
     if (ev.keyCode == 46){
-      // delete
+      // delete key - remove the selected post-it
       $(".selected").remove();
+      saveAll();
+    }else if (ev.keyCode == 27){
+      // escape - deselect the current post-it
+      deselect();
     }else{
       if ($(".text textarea").length == 0){
         // start typing into the selected box
@@ -119,9 +127,6 @@ $(function(){
           content += String.fromCharCode(ev.which);
         }else if (ev.which == 10 || ev.which == 13){ // new line
           content += "\r\n";
-        }else if (ev.which == 27){ // escape
-          deselect();
-          return;
         }
         $(".selected .text")
           .html("")
