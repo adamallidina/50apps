@@ -73,6 +73,13 @@ body {
   background-image: linear-gradient(top, #F1E767 0%, #FEB645 100%);
 }
 
+.post-it .timestamp {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 10pt;
+}
+
 .post-it .text {
   width: 100%;
   height: 100%;

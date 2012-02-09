@@ -14,6 +14,23 @@ new function($) {
   }
 }(jQuery);
 
+// a function to escape HTML elements
+escapeHTML = function(s) {
+  if (s){
+    var MAP = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&#34;',
+      "'": '&#39;'
+    };
+    var repl = function(c) { return MAP[c]; };
+    return s.replace(/[&<>'"]/g, repl);
+  }else{
+    return "";
+  }
+};
+
 function saveAll(){
   localStorage["postits"] = JSON.stringify(
     $(".post-it").map(function(){
@@ -24,30 +41,37 @@ function saveAll(){
         text = $(".text", this).html();
       } else {
         // yes
-        text = $(".text textarea", this).val();
+        text = escapeHTML($(".text textarea", this).val());
       }
       return {
         offset: $(this).offset(),
         text: text,
-        colour: $(this).css("backgroundImage")
+        colour: $(this).css("backgroundImage"),
+        timestamp: $(".timestamp", this).html()
       };
     }).toArray());
 }
 
+// deselects the selected postit
 function deselect(){
   $(".selected")
     .removeClass("selected")
     .children(".text")
       .each(function(){
-        $(this).html($("textarea", this).val())
-  });
+        // when you deselect something, remove the textarea
+        // and put the contents in as HTML
+        $(this).html(escapeHTML($("textarea", this).val()));
+      });
 }
 
 function createPostit(){
   // create the div
+  var time = new Date();
   var div = $("<div>")
     .addClass("post-it")
     .append($("<div>").addClass("text"))
+    .append($("<div>").addClass("timestamp")
+        .html($.datepicker.formatDate("yy-mm-dd", time) + " " + (time.getHours() + ":" + time.getMinutes())))
     .click(function(){
       // when clicked, de-select other ones and select this one
       deselect();
@@ -129,7 +153,10 @@ $(function(){
         .offset(obj.offset)
         .css("backgroundImage", obj.colour)
         .children(".text")
-          .html(obj.text);
+          .html(obj.text)
+        .end()
+        .children(".timestamp")
+          .html(obj.timestamp);
     });
   }
 });
