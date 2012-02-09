@@ -40,10 +40,22 @@ body {
   width: 30px;
 }
 
-.settings-bar .blue   { background-color: blue; }
-.settings-bar .red    { background-color: red; }
-.settings-bar .green  { background-color: green; }
-.settings-bar .yellow { background-color: yellow; }
+.settings-bar .blue {
+  background: -moz-linear-gradient(center top, #FFFFFF 0%, #9999FF 100%);
+  background: -webkit-linear-gradient(top, #FFFFFF 0%, #9999FF 100%);
+}
+.settings-bar .red {
+  background: -moz-linear-gradient(center top, #FFFFFF 0%, #FF9999 100%);
+  background: -webkit-linear-gradient(top, #FFFFFF 0%, #FF9999 100%);
+}
+.settings-bar .green {
+  background: -moz-linear-gradient(center top, #FFFFFF 0%, #99FF99 100%);
+  background: -webkit-linear-gradient(top, #FFFFFF 0%, #99FF99 100%);
+}
+.settings-bar .yellow {
+  background: -moz-linear-gradient(center top, #FFFFFF 0%, #FFFF99 100%);
+  background: -webkit-linear-gradient(top, #FFFFFF 0%, #FFFF99 100%);
+}
 
 .clear { clear: both; }
 
@@ -61,11 +73,24 @@ body {
   background-image: linear-gradient(top, #F1E767 0%, #FEB645 100%);
 }
 
+.post-it .text {
+  width: 100%;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.post-it .text textarea {
+  border: 0px;
+  font-family: sans-serif;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  resize: none;
+}
+
 .selected {
   box-shadow: 3px 3px rgba(128, 128, 128, 64);
 }
-
-.blue-box { background: linear-gradient(top, #FFFFFF 0%, #0000FF 100%); }
 
 .post-it .delete {
   position: absolute;
